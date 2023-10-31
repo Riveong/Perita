@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    android:orientation="vertical"
+
+    tools:context=".ui.Activities.MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="TextView" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+        android:id="@+id/addyourown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tell us your own tales!"
+        style="?android:attr/buttonStyleSmall"/>
+
+        <Button
+            android:id="@+id/action_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="log out"
+            android:backgroundTint="#E91E63"/>
+</LinearLayout>
+
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmental"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp" />
+
+
+
+</LinearLayout>
