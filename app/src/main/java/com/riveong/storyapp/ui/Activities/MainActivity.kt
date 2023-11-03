@@ -35,6 +35,11 @@ class MainActivity : AppCompatActivity() {
         binding.actionLogout.setOnClickListener {
             logOut()
         }
+        binding.toMaps.setOnClickListener{
+            startActivity(Intent(this@MainActivity,MapsActivity::class.java))
+        }
+
+
     }
 
     private fun userNameGet() {
@@ -45,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.apply {
 
                     loginViewModel.getUserName().observe(this@MainActivity) { theName: String ->
-                        binding.textView.text = "Welcome back, ${theName} :3"
+                        binding.textView.text = "Welcome back,\n ${theName} :3"
                         val fragmentManager = supportFragmentManager
                         val fragment = StoriesFragment()
                         fragmentManager.beginTransaction()

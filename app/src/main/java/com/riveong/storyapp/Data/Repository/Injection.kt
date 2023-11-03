@@ -16,7 +16,8 @@ object Injection {
         val apiService = ApiConfig.getApiService(jwt)
         val database = StoryDatabase.getInstance(context)
         val dao = database.StoryDao()
+        val dao2 = database.MapDao()
         val appExecutors = AppExecutors()
-        return StoryRepository.getInstance(apiService, dao, appExecutors, jwt.toString())
+        return StoryRepository.getInstance(apiService, dao, appExecutors, jwt.toString(),dao2)
     }
 }

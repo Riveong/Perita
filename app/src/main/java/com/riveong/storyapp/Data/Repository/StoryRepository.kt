@@ -10,6 +10,8 @@ import com.google.gson.internal.GsonBuildConfig
 import com.riveong.storyapp.Data.Retrofit.ApiService
 import com.riveong.storyapp.Data.Retrofit.ListStoryItem
 import com.riveong.storyapp.Data.Retrofit.ListStoryResponse
+import com.riveong.storyapp.Data.Retrofit.ResponseHasMap
+import com.riveong.storyapp.Data.Room.MapDao
 import com.riveong.storyapp.Data.Room.StoryDao
 import com.riveong.storyapp.Data.utils.AppExecutors
 import retrofit2.Call
@@ -21,9 +23,12 @@ class StoryRepository private constructor(
     private val apiService: ApiService,
     private val storyDao: StoryDao,
     private val appExecutors: AppExecutors,
-    private val jwt: String
+    private val jwt: String,
+    private val mapDao: MapDao
 ) {
     private val result = MediatorLiveData<Result<List<StoryEntity>>>()
+    private val resultMap = MediatorLiveData<Result<List<MapEntity>>>()
+
 
     fun getStory(): LiveData<Result<List<StoryEntity>>> {
         result.value = Result.Loading
@@ -62,6 +67,45 @@ class StoryRepository private constructor(
     }
 
 
+    fun getMap(): LiveData<Result<List<MapEntity>>> {
+        result.value = Result.Loading
+        val client = apiService.getMap()
+        client.enqueue(object : Callback<ResponseHasMap> {
+            override fun onResponse(call: Call<ResponseHasMap>, response: Response<ResponseHasMap>) {
+                if (response.isSuccessful) {
+                    val stories = response.body()?.listStory
+                    val storiesList = ArrayList<MapEntity>()
+                    appExecutors.diskIO.execute {
+                        stories?.forEach { story ->
+                            val stories = MapEntity(
+                                id = story!!.id,
+                                title = story.name,
+                                Description = story.description,
+                                publishedAt = story.createdAt,
+                                urlToImage = story.photoUrl,
+                                lat = story.lat!!,
+                                lon = story.lon!!
+                            )
+                            storiesList.add(stories)
+                        }
+                        mapDao.deleteAll()
+                        mapDao.insertStories(storiesList)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHasMap>, t: Throwable) {
+                resultMap.value = Result.Error(t.message.toString())
+            }
+        })
+        val localData = mapDao.getStories()
+        resultMap.addSource(localData) { newData: List<MapEntity> ->
+            resultMap.value = Result.Success(newData)
+        }
+        return resultMap
+    }
+
+
 
     companion object {
         @Volatile
@@ -70,10 +114,11 @@ class StoryRepository private constructor(
             apiService: ApiService,
             storyDao: StoryDao,
             appExecutors: AppExecutors,
-            jwt: String
+            jwt: String,
+            mapDao: MapDao
         ): StoryRepository =
             instance ?: synchronized(this) {
-                instance ?: StoryRepository(apiService, storyDao, appExecutors, jwt)
+                instance ?: StoryRepository(apiService, storyDao, appExecutors, jwt, mapDao)
             }.also { instance = it }
     }
 }

@@ -27,10 +27,14 @@ interface ApiService {
 
     @GET("stories")
     fun getStories(
-
-        //@Header("Authorization") token: String
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 20
     ): Call<ListStoryResponse>
 
+    @GET("stories")
+    fun getMap(
+        @Query("location") int: Int = 1
+    ): Call<ResponseHasMap>
 
     @Multipart
     @POST("stories")
