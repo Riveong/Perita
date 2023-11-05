@@ -16,7 +16,8 @@ Perita is more than just a social media platform; it's a movement, a revolution 
 - Retrofit
 - Glide
 - Okhttp-Logging
-- Datastore Preferences  
+- Datastore Preferences
+- Stable Diffusion Anything V5 ChibiARK LoRa (for generating the images)
 
 This app is a submission of dicoding intermediate android developer.  
 DO NOT COPY (you will get bad score cause I only got 3 stars XD)
