@@ -42,15 +42,22 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
 }
 
 dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.12")
     val cameraxVersion = "1.2.3"
 
 
     implementation("androidx.room:room-paging:2.5.0")
+    testImplementation ("org.mockito:mockito-core:3.12.4")
+    testImplementation ("org.mockito:mockito-inline:3.12.4")
+    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
     implementation("androidx.room:room-ktx:2.5.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")

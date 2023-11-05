@@ -3,7 +3,6 @@ package com.riveong.storyapp.ui.Activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.riveong.storyapp.R
 import com.riveong.storyapp.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -27,7 +26,6 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDetailDescription.text = intent.getStringExtra(EXTRA_DESCRIPTION)
         Glide.with(this@DetailActivity)
             .load(intent.getStringExtra(EXTRA_IMAGE))
-            .circleCrop()
             .into(binding.ivDetailPhoto)
 
 

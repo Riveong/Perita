@@ -7,11 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.LinearLayoutManager
-
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -19,12 +14,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.riveong.storyapp.Data.Model.StoriesViewModel
-import com.riveong.storyapp.Data.Model.ViewModelFactory
-import com.riveong.storyapp.Data.Repository.MapEntity
+import com.riveong.storyapp.Data.Model.ViewModelFactory2
 import com.riveong.storyapp.Data.Repository.Result
 import com.riveong.storyapp.R
 import com.riveong.storyapp.databinding.ActivityMapsBinding
-import com.riveong.storyapp.ui.Adapter.StoryAdapter
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -57,10 +50,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         addMarkers()
         setMapStyle()
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     private fun setMapStyle() {
@@ -77,7 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private fun addMarkers() {
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        val factory: ViewModelFactory2 = ViewModelFactory2.getInstance(this)
         val viewModel: StoriesViewModel by viewModels {
             factory
         }

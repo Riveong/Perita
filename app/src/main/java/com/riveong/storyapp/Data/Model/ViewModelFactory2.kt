@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.riveong.storyapp.Data.Repository.Injection
 import com.riveong.storyapp.Data.Repository.StoryRepository
 
-class ViewModelFactory private constructor(private val storiesRepository: StoryRepository) :
+class ViewModelFactory2 private constructor(private val storiesRepository: StoryRepository) :
     ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -18,10 +18,10 @@ class ViewModelFactory private constructor(private val storiesRepository: StoryR
 
     companion object {
         @Volatile
-        private var instance: ViewModelFactory? = null
-        fun getInstance(context: Context): ViewModelFactory =
+        private var instance: ViewModelFactory2? = null
+        fun getInstance(context: Context): ViewModelFactory2 =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
+                instance ?: ViewModelFactory2(Injection.provideRepository(context))
             }.also { instance = it }
     }
 }

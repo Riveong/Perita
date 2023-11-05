@@ -6,7 +6,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.google.gson.internal.GsonBuildConfig
+import com.riveong.storyapp.Data.Paging.StoryPagingSource
 import com.riveong.storyapp.Data.Retrofit.ApiService
 import com.riveong.storyapp.Data.Retrofit.ListStoryItem
 import com.riveong.storyapp.Data.Retrofit.ListStoryResponse
@@ -19,7 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class StoryRepository private constructor(
-    
+
     private val apiService: ApiService,
     private val storyDao: StoryDao,
     private val appExecutors: AppExecutors,
@@ -29,6 +34,16 @@ class StoryRepository private constructor(
     private val result = MediatorLiveData<Result<List<StoryEntity>>>()
     private val resultMap = MediatorLiveData<Result<List<MapEntity>>>()
 
+
+
+    fun getPeg(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(pageSize = 5),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService)
+            }
+        ).liveData
+    }
 
     fun getStory(): LiveData<Result<List<StoryEntity>>> {
         result.value = Result.Loading
@@ -41,11 +56,11 @@ class StoryRepository private constructor(
                     appExecutors.diskIO.execute {
                         stories?.forEach { story ->
                             val stories = StoryEntity(
-                                title=story!!.name,
+                                title= story.name,
                                 Description = story.description,
-                                publishedAt = story?.createdAt,
-                                urlToImage = story?.photoUrl,
-                                url = story.id!!
+                                publishedAt = story.createdAt,
+                                urlToImage = story.photoUrl,
+                                url = story.id
                             )
                             storiesList.add(stories)
                         }

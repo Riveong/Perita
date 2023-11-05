@@ -78,12 +78,18 @@
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcStories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
-    <androidx.fragment.app.FragmentContainerView
+
+    <!--<androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmental"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp" />-->
 
 </LinearLayout>
 
